@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Searchbar from './component/Searchbar';
 
-// const API_KEY = '21936247-eae73d86734178812e502aece';
+export default class App extends Component {
+  state = { searchRequest: '' };
 
-class App extends Component {
-  state = {};
-
+  hendleFormSubmit = (searchRequest) => {
+    this.setState({ searchRequest });
+  };
   render() {
     return (
       <div>
-        <Searchbar />
+        <Searchbar onSubmit={this.hendleFormSubmit} />
       </div>
     );
   }
 }
-
-export default App;
