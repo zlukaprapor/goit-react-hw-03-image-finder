@@ -1,43 +1,50 @@
 import { Component } from 'react';
+import { toast } from 'react-toastify';
+import styles from './Searchbar.module.css';
 
-export default class Searchbar extends Component {
+class Searchbar extends Component {
   state = {
-    searchRequest: '',
+    imgName: '',
   };
 
-  hendleNameChange = (event) => {
-    this.setState({ searchRequest: event.currentTarget.value.toLowerCase() });
+  handleNameChange = (event) => {
+    this.setState({ imgName: event.currentTarget.value.toLowerCase() });
   };
 
-  hendleSubmit = (event) => {
-    if (this.state.searchRequest.trim() === '') {
-      alert('Please enter your request!!!');
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (this.state.imgName.trim() === '') {
+      toast.error('Enter the name of the picture.');
       return;
     }
-    event.preventDefault();
-    this.props.onSubmit(this.state.searchRequest);
-    this.setState({ searchRequest: '' });
+
+    this.props.onSubmit(this.state.imgName);
+    this.setState({ imgName: '' });
   };
 
   render() {
     return (
-      <header className="searchbar">
-        <form onSubmit={this.hendleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
+      <header className={styles.Searchbar}>
+        <form onSubmit={this.handleSubmit} className={styles.SearchForm}>
+          <button type="submit" className={styles.SearchFormButton}>
+            <span className={styles.SearchFormButtonLabel}>GO</span>
           </button>
 
           <input
-            value={this.state.searchRequest}
-            onChange={this.hendleNameChange}
-            className="input"
+            className={styles.SearchFormInput}
             type="text"
-            // autocomplete="off"
-            // autofocus
+            //   autocomplete="off"
+            //   autofocus
             placeholder="Search images and photos"
+            name="imgName"
+            value={this.state.imgName}
+            onChange={this.handleNameChange}
           />
         </form>
       </header>
     );
   }
 }
+
+export default Searchbar;
